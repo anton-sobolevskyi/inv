@@ -1,82 +1,19 @@
 import 'dotenv/config';
 
-import connect from './client';
+import { db } from './client';
 import { products } from './schema/products';
 import { orders } from './schema/orders';
 import { guarantees } from './schema/guarantees';
+import { prices } from './schema/prices';
+import { orderProducts } from './schema/orderProducts';
 
 async function seed() {
-  const db = await connect();
-
+  await db.delete(prices);
+  await db.delete(guarantees);
+  await db.delete(orderProducts);
   await db.delete(products);
   await db.delete(orders);
-  await db.delete(guarantees);
 
-  // 1. Seed Guarantees (10 warranties)
-  const guaranteeData = [
-    { start: '2024-01-01 00:00:00.000', end: '2025-01-01 00:00:00.000' },
-    { start: '2024-03-15 00:00:00.000', end: '2026-03-15 00:00:00.000' },
-    { start: '2024-06-01 00:00:00.000', end: '2025-06-01 00:00:00.000' },
-    { start: '2024-09-10 00:00:00.000', end: '2027-09-10 00:00:00.000' },
-    { start: '2025-01-01 00:00:00.000', end: '2026-01-01 00:00:00.000' },
-    { start: '2025-02-20 00:00:00.000', end: '2026-02-20 00:00:00.000' },
-    { start: '2025-04-05 00:00:00.000', end: '2028-04-05 00:00:00.000' },
-    { start: '2025-07-12 00:00:00.000', end: '2026-07-12 00:00:00.000' },
-    { start: '2025-10-01 00:00:00.000', end: '2027-10-01 00:00:00.000' },
-    { start: '2026-01-15 00:00:00.000', end: '2027-01-15 00:00:00.000' },
-  ];
-
-  const insertedGuarantees = await db.insert(guarantees).values(guaranteeData).$returningId();
-  console.log(`Inserted ${insertedGuarantees.length} guarantees`);
-
-  // 2. Seed Orders (25 orders)
-  const orderTitles = [
-    'Office Setup - Dual Monitors',
-    'Gaming Rig Upgrade',
-    'Design Studio Order',
-    'Home Office Essentials',
-    'Corporate Bulk Purchase',
-    'Student Discount Pack',
-    'Content Creator Bundle',
-    'IT Department Restock',
-    'Remote Work Kit',
-    'Professional Photo Editing',
-    'Esports Team Order',
-    'Architecture Firm Setup',
-    'Video Production Monitors',
-    'Retail Display Screens',
-    'Medical Imaging Displays',
-    'Financial Trading Desks',
-    'Education Lab Monitors',
-    'Startup Office Package',
-    'Freelancer Workspace',
-    'Enterprise Multi-Monitor',
-    'Color Grading Suite',
-    'CAD Workstation',
-    'Streaming Setup',
-    'Security Operations Center',
-    'Conference Room Displays',
-  ];
-
-  const orderData = orderTitles.map((title, index) => ({
-    title,
-    description: `Order for high-quality monitors. ${index % 2 === 0 ? 'Priority delivery requested.' : 'Standard shipping.'} Includes installation notes.`,
-    date: new Date(
-      2024 + Math.floor(index / 12),
-      index % 12,
-      (index % 28) + 1,
-      10 + (index % 8),
-      30
-    )
-      .toISOString()
-      .replace('T', ' ')
-      .slice(0, 23),
-  }));
-
-  const insertedOrders = await db.insert(orders).values(orderData).$returningId();
-  console.log(`Inserted ${insertedOrders.length} orders`);
-
-  // 3. Seed Products (30 products - monitors)
   const monitorModels = [
     {
       title: 'Dell UltraSharp U2723DE',
@@ -108,10 +45,7 @@ async function seed() {
   const productData = [];
   for (let i = 0; i < 30; i++) {
     const model = monitorModels[i % monitorModels.length];
-    const order = insertedOrders[i % insertedOrders.length];
-    const guarantee = insertedGuarantees[i % insertedGuarantees.length];
     const isNew = i % 3 !== 0;
-
     productData.push({
       serialNumber: `SN-${2024 + (i % 3)}-${String(10000 + i).padStart(5, '0')}`,
       isNew,
@@ -119,8 +53,6 @@ async function seed() {
       title: `${model.title}${i > 9 ? ` #${i + 1}` : ''}`,
       specification:
         model.spec + (isNew ? ' | Brand new, sealed box.' : ' | Refurbished, certified.'),
-      orderId: order!.id,
-      guaranteeId: guarantee!.id,
       type: 'monitors' as const,
       date: new Date(2024 + Math.floor(i / 15), i % 12, (i % 28) + 1, 14, 0)
         .toISOString()
@@ -129,11 +61,144 @@ async function seed() {
     });
   }
 
-  const insertedProducts = await db.insert(products).values(productData);
+  const insertedProducts = await db.insert(products).values(productData).$returningId();
   console.log(`Inserted ${insertedProducts.length} products`);
 
+  const priceData = [];
+  for (let i = 0; i < insertedProducts.length; i++) {
+    const productId = insertedProducts[i]!.id;
+    const baseUsd = 250 + (i % 15) * 40 + Math.floor(Math.random() * 50);
+    priceData.push({
+      productId,
+      value: baseUsd.toFixed(2),
+      symbol: 'USD' as const,
+      isDefault: true,
+    });
+    if (i % 5 < 2) {
+      priceData.push({
+        productId,
+        value: (baseUsd * 41.5).toFixed(2),
+        symbol: 'UAH' as const,
+        isDefault: false,
+      });
+    }
+  }
+  await db.insert(prices).values(priceData);
+  console.log(`Inserted ${priceData.length} prices`);
+
+  const orderTitles = [
+    'Office Setup - Dual Monitors',
+    'Gaming Rig Upgrade',
+    'Design Studio Order',
+    'Home Office Essentials',
+    'Corporate Bulk Purchase',
+    'Student Discount Pack',
+    'Content Creator Bundle',
+    'IT Department Restock',
+    'Remote Work Kit',
+    'Professional Photo Editing',
+    'Esports Team Order',
+    'Architecture Firm Setup',
+    'Video Production Monitors',
+    'Retail Display Screens',
+    'Medical Imaging Displays',
+    'Financial Trading Desks',
+    'Education Lab Monitors',
+    'Startup Office Package',
+    'Freelancer Workspace',
+    'Enterprise Multi-Monitor',
+    'Color Grading Suite',
+    'CAD Workstation',
+    'Streaming Setup',
+    'Security Operations Center',
+    'Conference Room Displays',
+  ];
+
+  const locations = [
+    { address: '45 Shevchenka St, Lviv, Ukraine', latitude: 49.8397, longitude: 24.0297 },
+    { address: '12 Rynok Square, Lviv, Ukraine', latitude: 49.8419, longitude: 24.0316 },
+    { address: '88 Prospekt Svobody, Lviv, Ukraine', latitude: 49.8444, longitude: 24.0261 },
+    { address: '3 Horodotska St, Lviv, Ukraine', latitude: 49.8378, longitude: 24.0235 },
+    { address: '210 Zelena St, Lviv, Ukraine', latitude: 49.8221, longitude: 24.0412 },
+    { address: '7 Franka St, Lviv, Ukraine', latitude: 49.8332, longitude: 24.0189 },
+    { address: '15 Bandery St, Lviv, Ukraine', latitude: 49.8355, longitude: 24.0123 },
+    { address: '99 Kulparkivska St, Lviv, Ukraine', latitude: 49.8156, longitude: 23.9987 },
+    { address: '22 Sichovykh Striltsiv St, Lviv, Ukraine', latitude: 49.8421, longitude: 24.0228 },
+    { address: '56 Lypska St, Kyiv, Ukraine', latitude: 50.4423, longitude: 30.5245 },
+    { address: '1 Khreshchatyk, Kyiv, Ukraine', latitude: 50.4501, longitude: 30.5234 },
+    {
+      address: '34 Bohdana Khmelnytskoho St, Kyiv, Ukraine',
+      latitude: 50.4478,
+      longitude: 30.5132,
+    },
+    { address: '18 Velyka Vasylkivska St, Kyiv, Ukraine', latitude: 50.4389, longitude: 30.5156 },
+    { address: '9 Mechnykova St, Kyiv, Ukraine', latitude: 50.4412, longitude: 30.5289 },
+    { address: '77 Saksahanskoho St, Kyiv, Ukraine', latitude: 50.4356, longitude: 30.5098 },
+    { address: '4 Soborna St, Odesa, Ukraine', latitude: 46.4825, longitude: 30.7233 },
+    { address: '21 Deribasivska St, Odesa, Ukraine', latitude: 46.4845, longitude: 30.7321 },
+    { address: '13 Rishelievska St, Odesa, Ukraine', latitude: 46.4798, longitude: 30.7289 },
+    { address: '55 Preobrazhenska St, Odesa, Ukraine', latitude: 46.4712, longitude: 30.7356 },
+    { address: '8 Yevropeiska St, Dnipro, Ukraine', latitude: 48.4647, longitude: 35.0462 },
+    { address: '19 Naberezhna Peremohy, Dnipro, Ukraine', latitude: 48.4689, longitude: 35.0415 },
+    { address: '6 Haharin Ave, Dnipro, Ukraine', latitude: 48.4556, longitude: 35.0523 },
+    { address: '42 Polova St, Kharkiv, Ukraine', latitude: 49.9935, longitude: 36.2304 },
+    { address: '11 Sumska St, Kharkiv, Ukraine', latitude: 49.9901, longitude: 36.2345 },
+    { address: '27 Nauky Ave, Kharkiv, Ukraine', latitude: 50.0012, longitude: 36.2289 },
+  ];
+
+  const orderData = orderTitles.map((title, index) => {
+    const loc = locations[index % locations.length];
+    return {
+      title,
+      description: `Order for high-quality monitors. ${index % 2 === 0 ? 'Priority delivery requested.' : 'Standard shipping.'}`,
+      address: loc.address,
+      latitude: loc.latitude,
+      longitude: loc.longitude,
+      date: new Date(
+        2024 + Math.floor(index / 12),
+        index % 12,
+        (index % 28) + 1,
+        10 + (index % 8),
+        30
+      )
+        .toISOString()
+        .replace('T', ' ')
+        .slice(0, 23),
+    };
+  });
+
+  const insertedOrders = await db.insert(orders).values(orderData).$returningId();
+  console.log(`Inserted ${insertedOrders.length} orders`);
+
+  const orderProductData = [];
+  const guaranteeData = [];
+
+  for (let i = 0; i < insertedProducts.length; i++) {
+    const productId = insertedProducts[i]!.id;
+    const orderIdx = i % insertedOrders.length;
+    const orderId = insertedOrders[orderIdx]!.id;
+    const orderDate = orderData[orderIdx].date;
+
+    orderProductData.push({ orderId, productId });
+
+    const endDate = new Date(orderDate.replace(' ', 'T') + 'Z');
+    endDate.setFullYear(endDate.getFullYear() + 1 + (i % 3));
+    const end = endDate.toISOString().replace('T', ' ').slice(0, 23);
+
+    guaranteeData.push({
+      orderId,
+      productId,
+      start: orderDate,
+      end,
+    });
+  }
+
+  await db.insert(orderProducts).values(orderProductData);
+  await db.insert(guarantees).values(guaranteeData);
+  console.log(`Linked ${orderProductData.length} products to orders and created guarantees`);
+
   console.log('Seeding completed successfully!');
-  process.exit();
+  process.exit(0);
 }
 
 seed().catch((err) => {

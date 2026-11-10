@@ -1,4 +1,9 @@
 import { createSchema, createYoga } from 'graphql-yoga';
+import { readFileSync } from 'fs';
+import { join } from 'path';
+import { resolvers } from '@/graphql/resolvers';
+
+const typeDefs = readFileSync(join(process.cwd(), 'src/graphql/schema.graphql'), 'utf-8');
 
 interface NextContext {
   params: Promise<Record<string, string>>;
@@ -6,24 +11,10 @@ interface NextContext {
 
 const { handleRequest } = createYoga<NextContext>({
   schema: createSchema({
-    typeDefs: /* GraphQL */ `
-      type Query {
-        hello: String
-        greetings: String
-      }
-    `,
-    resolvers: {
-      Query: {
-        hello: () => 'Hello from Next.js + GraphQL Yoga!',
-        greetings: () => 'This is the greetings field',
-      },
-    },
+    typeDefs,
+    resolvers,
   }),
-
-  // Important: tell Yoga the correct endpoint path
   graphqlEndpoint: '/api/graphql',
-
-  // Enable GraphiQL playground in development
   graphiql: process.env.NODE_ENV === 'development',
 });
 

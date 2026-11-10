@@ -1,15 +1,23 @@
 {
   "version": "6",
   "dialect": "mysql",
-  "id": "d31bee6d-6e77-42ef-9162-ed9c46380711",
-  "prevIds": ["a265c6a9-f4c0-4cdf-9e3e-88ec699480b4"],
+  "id": "b7be7d1a-6ef3-4015-b007-aebcef7d05be",
+  "prevIds": ["00000000-0000-0000-0000-000000000000"],
   "ddl": [
     {
       "name": "guarantees",
       "entityType": "tables"
     },
     {
+      "name": "order_products",
+      "entityType": "tables"
+    },
+    {
       "name": "orders",
+      "entityType": "tables"
+    },
+    {
+      "name": "prices",
       "entityType": "tables"
     },
     {
@@ -22,6 +30,34 @@
       "type": "int",
       "notNull": true,
       "autoIncrement": true,
+      "default": null,
+      "onUpdateNow": false,
+      "onUpdateNowFsp": null,
+      "charSet": null,
+      "collation": null,
+      "generated": null,
+      "entityType": "columns"
+    },
+    {
+      "table": "guarantees",
+      "name": "order_id",
+      "type": "int",
+      "notNull": true,
+      "autoIncrement": false,
+      "default": null,
+      "onUpdateNow": false,
+      "onUpdateNowFsp": null,
+      "charSet": null,
+      "collation": null,
+      "generated": null,
+      "entityType": "columns"
+    },
+    {
+      "table": "guarantees",
+      "name": "product_id",
+      "type": "int",
+      "notNull": true,
+      "autoIncrement": false,
       "default": null,
       "onUpdateNow": false,
       "onUpdateNowFsp": null,
@@ -49,6 +85,34 @@
       "name": "end",
       "type": "datetime(3)",
       "notNull": false,
+      "autoIncrement": false,
+      "default": null,
+      "onUpdateNow": false,
+      "onUpdateNowFsp": null,
+      "charSet": null,
+      "collation": null,
+      "generated": null,
+      "entityType": "columns"
+    },
+    {
+      "table": "order_products",
+      "name": "order_id",
+      "type": "int",
+      "notNull": true,
+      "autoIncrement": false,
+      "default": null,
+      "onUpdateNow": false,
+      "onUpdateNowFsp": null,
+      "charSet": null,
+      "collation": null,
+      "generated": null,
+      "entityType": "columns"
+    },
+    {
+      "table": "order_products",
+      "name": "product_id",
+      "type": "int",
+      "notNull": true,
       "autoIncrement": false,
       "default": null,
       "onUpdateNow": false,
@@ -102,22 +166,8 @@
     },
     {
       "table": "orders",
-      "name": "date",
-      "type": "datetime(3)",
-      "notNull": true,
-      "autoIncrement": false,
-      "default": null,
-      "onUpdateNow": false,
-      "onUpdateNowFsp": null,
-      "charSet": null,
-      "collation": null,
-      "generated": null,
-      "entityType": "columns"
-    },
-    {
-      "table": "orders",
-      "name": "location_name",
-      "type": "varchar(255)",
+      "name": "address",
+      "type": "varchar(500)",
       "notNull": false,
       "autoIncrement": false,
       "default": null,
@@ -147,6 +197,90 @@
       "name": "longitude",
       "type": "double",
       "notNull": false,
+      "autoIncrement": false,
+      "default": null,
+      "onUpdateNow": false,
+      "onUpdateNowFsp": null,
+      "charSet": null,
+      "collation": null,
+      "generated": null,
+      "entityType": "columns"
+    },
+    {
+      "table": "orders",
+      "name": "date",
+      "type": "datetime(3)",
+      "notNull": true,
+      "autoIncrement": false,
+      "default": null,
+      "onUpdateNow": false,
+      "onUpdateNowFsp": null,
+      "charSet": null,
+      "collation": null,
+      "generated": null,
+      "entityType": "columns"
+    },
+    {
+      "table": "prices",
+      "name": "id",
+      "type": "int",
+      "notNull": true,
+      "autoIncrement": true,
+      "default": null,
+      "onUpdateNow": false,
+      "onUpdateNowFsp": null,
+      "charSet": null,
+      "collation": null,
+      "generated": null,
+      "entityType": "columns"
+    },
+    {
+      "table": "prices",
+      "name": "product_id",
+      "type": "int",
+      "notNull": true,
+      "autoIncrement": false,
+      "default": null,
+      "onUpdateNow": false,
+      "onUpdateNowFsp": null,
+      "charSet": null,
+      "collation": null,
+      "generated": null,
+      "entityType": "columns"
+    },
+    {
+      "table": "prices",
+      "name": "value",
+      "type": "decimal(12,2)",
+      "notNull": true,
+      "autoIncrement": false,
+      "default": null,
+      "onUpdateNow": false,
+      "onUpdateNowFsp": null,
+      "charSet": null,
+      "collation": null,
+      "generated": null,
+      "entityType": "columns"
+    },
+    {
+      "table": "prices",
+      "name": "symbol",
+      "type": "enum('USD','UAH')",
+      "notNull": true,
+      "autoIncrement": false,
+      "default": null,
+      "onUpdateNow": false,
+      "onUpdateNowFsp": null,
+      "charSet": null,
+      "collation": null,
+      "generated": null,
+      "entityType": "columns"
+    },
+    {
+      "table": "prices",
+      "name": "is_default",
+      "type": "boolean",
+      "notNull": true,
       "autoIncrement": false,
       "default": null,
       "onUpdateNow": false,
@@ -242,34 +376,6 @@
     },
     {
       "table": "products",
-      "name": "order_id",
-      "type": "int",
-      "notNull": true,
-      "autoIncrement": false,
-      "default": null,
-      "onUpdateNow": false,
-      "onUpdateNowFsp": null,
-      "charSet": null,
-      "collation": null,
-      "generated": null,
-      "entityType": "columns"
-    },
-    {
-      "table": "products",
-      "name": "guarantee_id",
-      "type": "int",
-      "notNull": true,
-      "autoIncrement": false,
-      "default": null,
-      "onUpdateNow": false,
-      "onUpdateNowFsp": null,
-      "charSet": null,
-      "collation": null,
-      "generated": null,
-      "entityType": "columns"
-    },
-    {
-      "table": "products",
       "name": "type",
       "type": "enum('monitors')",
       "notNull": true,
@@ -297,6 +403,12 @@
       "entityType": "columns"
     },
     {
+      "table": "order_products",
+      "name": "PRIMARY",
+      "columns": ["order_id", "product_id"],
+      "entityType": "pks"
+    },
+    {
       "table": "guarantees",
       "name": "PRIMARY",
       "columns": ["id"],
@@ -309,14 +421,20 @@
       "entityType": "pks"
     },
     {
-      "table": "products",
+      "table": "prices",
       "name": "PRIMARY",
       "columns": ["id"],
       "entityType": "pks"
     },
     {
       "table": "products",
-      "name": "products_order_id_orders_id_fkey",
+      "name": "PRIMARY",
+      "columns": ["id"],
+      "entityType": "pks"
+    },
+    {
+      "table": "guarantees",
+      "name": "guarantees_order_id_orders_id_fkey",
       "columns": ["order_id"],
       "tableTo": "orders",
       "columnsTo": ["id"],
@@ -326,13 +444,46 @@
       "entityType": "fks"
     },
     {
-      "table": "products",
-      "name": "products_guarantee_id_guarantees_id_fkey",
-      "columns": ["guarantee_id"],
-      "tableTo": "guarantees",
+      "table": "guarantees",
+      "name": "guarantees_product_id_products_id_fkey",
+      "columns": ["product_id"],
+      "tableTo": "products",
       "columnsTo": ["id"],
       "onUpdate": "NO ACTION",
-      "onDelete": "RESTRICT",
+      "onDelete": "CASCADE",
+      "nameExplicit": false,
+      "entityType": "fks"
+    },
+    {
+      "table": "order_products",
+      "name": "order_products_order_id_orders_id_fkey",
+      "columns": ["order_id"],
+      "tableTo": "orders",
+      "columnsTo": ["id"],
+      "onUpdate": "NO ACTION",
+      "onDelete": "CASCADE",
+      "nameExplicit": false,
+      "entityType": "fks"
+    },
+    {
+      "table": "order_products",
+      "name": "order_products_product_id_products_id_fkey",
+      "columns": ["product_id"],
+      "tableTo": "products",
+      "columnsTo": ["id"],
+      "onUpdate": "NO ACTION",
+      "onDelete": "CASCADE",
+      "nameExplicit": false,
+      "entityType": "fks"
+    },
+    {
+      "table": "prices",
+      "name": "prices_product_id_products_id_fkey",
+      "columns": ["product_id"],
+      "tableTo": "products",
+      "columnsTo": ["id"],
+      "onUpdate": "NO ACTION",
+      "onDelete": "CASCADE",
       "nameExplicit": false,
       "entityType": "fks"
     }
