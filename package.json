@@ -14,7 +14,8 @@
     "db:generate": "drizzle-kit generate",
     "db:migrate": "drizzle-kit migrate",
     "db:seed": "tsx src/db/seed.ts",
-    "prepare": "husky"
+    "prepare": "husky",
+    "test": "jest"
   },
   "dependencies": {
     "@reduxjs/toolkit": "^2.14.0",
@@ -33,6 +34,10 @@
   },
   "devDependencies": {
     "@serwist/turbopack": "^9.5.13",
+    "@testing-library/dom": "^10.4.2",
+    "@testing-library/jest-dom": "^7.0.1",
+    "@testing-library/react": "^16.3.3",
+    "@types/jest": "^30.0.0",
     "@types/node": "^20",
     "@types/react": "^19",
     "@types/react-dom": "^19",
@@ -44,11 +49,14 @@
     "eslint-config-next": "16.4.5",
     "eslint-config-prettier": "^10.1.8",
     "husky": "^9.1.7",
+    "jest": "^30.5.2",
+    "jest-environment-jsdom": "^30.5.2",
     "lint-staged": "^17.6.0",
     "prettier": "^3.9.10",
     "sass": "^1.108.1",
     "sass-embedded": "^1.108.1",
     "serwist": "^9.5.13",
+    "ts-node": "^10.9.2",
     "tsx": "^4.23.15",
     "typescript": "^5"
   },
