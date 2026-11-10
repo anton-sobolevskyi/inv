@@ -15,7 +15,8 @@
     "db:migrate": "drizzle-kit migrate",
     "db:seed": "tsx src/db/seed.ts",
     "prepare": "husky",
-    "test": "jest"
+    "test": "jest",
+    "server": "tsx server/index.ts"
   },
   "dependencies": {
     "@reduxjs/toolkit": "^2.14.0",
@@ -23,6 +24,7 @@
     "axios": "^1.21.0",
     "bootstrap": "6.0.0-alpha.1",
     "drizzle-orm": "1.0.0-rc.5",
+    "express": "^5.3.0",
     "graphql": "^17.1.0",
     "graphql-yoga": "^6.0.1",
     "mysql2": "^3.24.6",
@@ -30,13 +32,15 @@
     "next-intl": "^4.14.9",
     "react": "19.3.0",
     "react-dom": "19.3.0",
-    "react-redux": "^9.3.1"
+    "react-redux": "^9.3.1",
+    "socket.io": "^4.8.4"
   },
   "devDependencies": {
     "@serwist/turbopack": "^9.5.13",
     "@testing-library/dom": "^10.4.2",
     "@testing-library/jest-dom": "^7.0.1",
     "@testing-library/react": "^16.3.3",
+    "@types/express": "^5.0.6",
     "@types/jest": "^30.0.0",
     "@types/node": "^20",
     "@types/react": "^19",
