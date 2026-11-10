@@ -1,1 +1,7 @@
 @use 'bootstrap/scss/bootstrap';
+
+:root {
+  --body-font-family: var(--font-geist-sans);
+
+  color-scheme: light;
+}

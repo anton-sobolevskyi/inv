@@ -1,0 +1,23 @@
+.layout {
+  display: grid;
+  grid-template-rows: 78px 1fr;
+  grid-template-columns: 260px 1fr;
+  grid-template-areas:
+    'header header'
+    'sidebar main';
+  height: 100dvh;
+  width: 100%;
+  overflow: hidden;
+}
+
+.header {
+  grid-area: header;
+}
+
+.sidebar {
+  grid-area: sidebar;
+}
+
+.main {
+  grid-area: main;
+}

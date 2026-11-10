@@ -5,5 +5,11 @@
   "Offline": {
     "title": "",
     "body": ""
+  },
+  "Clock": {
+    "today": "Today"
+  },
+  "SocketCounter": {
+    "title": "Active sessions"
   }
 }
