@@ -2,6 +2,7 @@ import type { Metadata, Viewport } from 'next';
 import { Geist, Geist_Mono } from 'next/font/google';
 import { NextIntlClientProvider } from 'next-intl';
 import { getLocale } from 'next-intl/server';
+import { SerwistProvider } from '@serwist/turbopack/react';
 
 import './globals.scss';
 
@@ -66,11 +67,13 @@ export default async function RootLayout({ children }: LayoutProps<'/'>) {
 
   return (
     <html lang={locale} className={`${geistSans.variable} ${geistMono.variable}`}>
-      <NextIntlClientProvider>
-        <StoreProvider>
-          <body>{children}</body>
-        </StoreProvider>
-      </NextIntlClientProvider>
+      <SerwistProvider swUrl="/serwist/sw.js">
+        <NextIntlClientProvider>
+          <StoreProvider>
+            <body>{children}</body>
+          </StoreProvider>
+        </NextIntlClientProvider>
+      </SerwistProvider>
     </html>
   );
 }
