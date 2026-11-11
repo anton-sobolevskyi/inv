@@ -3,10 +3,11 @@
 import { useTranslations } from 'next-intl';
 import { useEffect, useState } from 'react';
 import { io } from 'socket.io-client';
+import { cn } from '@/utils/cn';
 
-export default function SocketCounter({ url }: { url: string }) {
+export default function SessionCounter({ url }: { url: string }) {
   const [sessions, setSessions] = useState(0);
-  const t = useTranslations('SocketCounter');
+  const t = useTranslations('SessionCounter');
 
   useEffect(() => {
     const socket = io(url);
@@ -17,7 +18,7 @@ export default function SocketCounter({ url }: { url: string }) {
   }, []);
 
   return (
-    <span>
+    <span className={cn('badge bg-primary')}>
       {t('title')}: {sessions}
     </span>
   );

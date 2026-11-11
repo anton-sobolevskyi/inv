@@ -21,10 +21,14 @@ export default function Clock() {
     <div className={cn('d-flex flex-column')}>
       <span>{t('today')}</span>
       <span className={cn('d-inline-flex gap-4')}>
-        <span className={cn('d-inline-flex')}>{time && getFormattedDate(time)}</span>
+        <time dateTime={time.toISOString()} className={cn('d-inline-flex')}>
+          {time && getFormattedDate(time)}
+        </time>
         <span className={cn('d-inline-flex align-items-center gap-2')}>
           <ClockIcon size={12} className={cn('fg-primary')} />
-          <span>{time && getFormattedTime(time)}</span>
+          <time className={cn('fs-6')} dateTime={time.toISOString()}>
+            {time && getFormattedTime(time)}
+          </time>
         </span>
       </span>
     </div>

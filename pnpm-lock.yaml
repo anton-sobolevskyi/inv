@@ -220,8 +220,8 @@ importers:
         specifier: ^1.21.0
         version: 1.21.0(debug@4.4.3(supports-color@7.2.0))(supports-color@7.2.0)
       bootstrap:
-        specifier: 6.0.0-alpha.1
-        version: 6.0.0-alpha.1(@floating-ui/dom@1.8.0)(vanilla-calendar-pro@3.4.0)
+        specifier: ^5.3.8
+        version: 5.3.8(@popperjs/core@2.11.8)
       drizzle-orm:
         specifier: 1.0.0-rc.5
         version: 1.0.0-rc.5(@sinclair/typebox@0.34.52)(mysql2@3.24.6(@types/node@20.19.43))(zod@4.6.7)
@@ -1044,24 +1044,6 @@ packages:
     resolution:
       {
         integrity: sha512-y8MTAeBlEQUNVnskmZQwpseZN3EgCksQNOULlfxWY6o6VEqh01+oExMgbM7gN6YLQ8pNDYeweNPKJRt8jQm2ZQ==,
-      }
-
-  '@floating-ui/core@1.8.0':
-    resolution:
-      {
-        integrity: sha512-0CIZ5itps/8x7BG8dEIhs53BvCUH2PCoogtakwRTut+Arm58sJooJ0AuZhLw2HJYIR5cMLNPBSS728sPho2khQ==,
-      }
-
-  '@floating-ui/dom@1.8.0':
-    resolution:
-      {
-        integrity: sha512-yXSrzeHZBTZadLOlfyhCkJHNeLJnHRnRInwdZ40L7ZiaAtrBwoYlsDrX3v5zB1Utk7CLfzcOVnVVWoXEky7Ceg==,
-      }
-
-  '@floating-ui/utils@0.2.12':
-    resolution:
-      {
-        integrity: sha512-HpCo8tmWzLVad5s2d19EhAz5zqrrQ6s69qd6moPMQvkOuSwDT1YgRfWSVuc4ennqrgv3OHppiOGMQ7oC13yIww==,
       }
 
   '@formatjs/fast-memoize@3.1.7':
@@ -1912,6 +1894,12 @@ packages:
         integrity: sha512-SEeaJLb3qBNF/OaXnaR1NmmBbFYk1zC0ZH/52fATcRPLFg/p791YrcyFFy44Bo9sLaGuSuLp5Q6axbb/O+v/RA==,
       }
     engines: { node: ^14.18.0 || >=16.0.0 }
+
+  '@popperjs/core@2.11.8':
+    resolution:
+      {
+        integrity: sha512-P1st0aksCrn9sGZhp8GMYwBnQsbvAWsZAX44oXNNvLHGqAOcoVxmjZiohstwQ7SqKnbR47akdNi+uleWD8+g6A==,
+      }
 
   '@reduxjs/toolkit@2.14.0':
     resolution:
@@ -3204,14 +3192,13 @@ packages:
     engines: { node: '>=6.0.0' }
     hasBin: true
 
-  bootstrap@6.0.0-alpha.1:
+  bootstrap@5.3.8:
     resolution:
       {
-        integrity: sha512-snAWSjKDVdQAyPOtR69Upy247tZq13gw86SMDMZS4wNfBXGNdzbHdIP6GAyaAVJwTX4LjWowY8YYaJkSDv2wGQ==,
+        integrity: sha512-HP1SZDqaLDPwsNiqRqi5NcP0SSXciX2s9E+RyqJIIqGo+vJeN5AJVM98CXmW/Wux0nQ5L7jeWUdplCEf0Ee+tg==,
       }
     peerDependencies:
-      '@floating-ui/dom': ^1.7.6
-      vanilla-calendar-pro: ^3.4.0
+      '@popperjs/core': ^2.11.8
 
   brace-expansion@1.1.21:
     resolution:
@@ -6928,12 +6915,6 @@ packages:
       }
     engines: { node: '>=10.12.0' }
 
-  vanilla-calendar-pro@3.4.0:
-    resolution:
-      {
-        integrity: sha512-HLWjzHOWvMIrjI77tXK5bYzp0s5TeBSrZC247STjcTAdWI7kqEwWT6Xvu20vqdwzF498H1Da8l4WpdgVIGtc1Q==,
-      }
-
   varint@6.0.0:
     resolution:
       {
@@ -7552,17 +7533,6 @@ snapshots:
 
   '@fastify/busboy@3.2.5': {}
 
-  '@floating-ui/core@1.8.0':
-    dependencies:
-      '@floating-ui/utils': 0.2.12
-
-  '@floating-ui/dom@1.8.0':
-    dependencies:
-      '@floating-ui/core': 1.8.0
-      '@floating-ui/utils': 0.2.12
-
-  '@floating-ui/utils@0.2.12': {}
-
   '@formatjs/fast-memoize@3.1.7': {}
 
   '@formatjs/icu-messageformat-parser@3.5.18':
@@ -8092,6 +8062,8 @@ snapshots:
     optional: true
 
   '@pkgr/core@0.3.6': {}
+
+  '@popperjs/core@2.11.8': {}
 
   '@reduxjs/toolkit@2.14.0(@types/react@19.3.0)(react-redux@9.3.1(@types/react@19.3.0)(react@19.3.0)(redux@5.0.1))(react@19.3.0)':
     dependencies:
@@ -8907,10 +8879,9 @@ snapshots:
 
   baseline-browser-mapping@2.11.35: {}
 
-  bootstrap@6.0.0-alpha.1(@floating-ui/dom@1.8.0)(vanilla-calendar-pro@3.4.0):
+  bootstrap@5.3.8(@popperjs/core@2.11.8):
     dependencies:
-      '@floating-ui/dom': 1.8.0
-      vanilla-calendar-pro: 3.4.0
+      '@popperjs/core': 2.11.8
 
   brace-expansion@1.1.21:
     dependencies:
@@ -11462,8 +11433,6 @@ snapshots:
       '@jridgewell/trace-mapping': 0.3.31
       '@types/istanbul-lib-coverage': 2.0.6
       convert-source-map: 2.0.0
-
-  vanilla-calendar-pro@3.4.0: {}
 
   varint@6.0.0: {}
 

@@ -23,7 +23,7 @@
     "@reduxjs/toolkit": "^2.14.0",
     "@serwist/next": "^9.5.13",
     "axios": "^1.21.0",
-    "bootstrap": "6.0.0-alpha.1",
+    "bootstrap": "^5.3.8",
     "drizzle-orm": "1.0.0-rc.5",
     "graphql": "^17.1.0",
     "graphql-yoga": "^6.0.1",
