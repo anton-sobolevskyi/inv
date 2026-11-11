@@ -6,7 +6,7 @@ import { SerwistProvider } from '@serwist/turbopack/react';
 
 import './globals.scss';
 
-import MainLayout from '@/ui/layout/MainLayout';
+import StoreProvider from '@/providers/StoreProvider';
 
 const geistSans = Geist({
   variable: '--font-geist-sans',
@@ -62,13 +62,13 @@ export default async function RootLayout({ children }: LayoutProps<'/'>) {
 
   return (
     <html lang={locale} className={`${geistSans.variable}`}>
-      <SerwistProvider swUrl="/serwist/sw.js">
-        <NextIntlClientProvider>
-          <body>
-            <MainLayout>{children}</MainLayout>
-          </body>
-        </NextIntlClientProvider>
-      </SerwistProvider>
+      <body>
+        <SerwistProvider swUrl="/serwist/sw.js">
+          <NextIntlClientProvider>
+            <StoreProvider>{children}</StoreProvider>
+          </NextIntlClientProvider>
+        </SerwistProvider>
+      </body>
     </html>
   );
 }

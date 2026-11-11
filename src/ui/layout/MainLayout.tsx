@@ -1,4 +1,4 @@
-import StoreProvider from '@/lib/providers/StoreProvider';
+import StoreProvider from '@/providers/StoreProvider';
 
 import TopMenu from './TopMenu';
 
