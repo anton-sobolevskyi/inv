@@ -1,4 +1,12 @@
-import { boolean, decimal, foreignKey, int, mysqlEnum, mysqlTable } from 'drizzle-orm/mysql-core';
+import {
+  boolean,
+  decimal,
+  foreignKey,
+  index,
+  int,
+  mysqlEnum,
+  mysqlTable,
+} from 'drizzle-orm/mysql-core';
 import { products } from '@/db/schema/products';
 
 export const prices = mysqlTable(
@@ -11,6 +19,7 @@ export const prices = mysqlTable(
     isDefault: boolean('is_default').notNull(),
   },
   (table) => [
+    index('prices_product_idx').on(table.productId),
     foreignKey({
       columns: [table.productId],
       foreignColumns: [products.id],
