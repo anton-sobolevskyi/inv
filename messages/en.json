@@ -16,5 +16,9 @@
     "dashboard": "Dashboard",
     "orders": "Orders",
     "products": "Products"
+  },
+  "TopMenu": {
+    "search": "Search",
+    "language": "Language"
   }
 }

@@ -1,34 +1,28 @@
+import { ShieldCheck } from 'lucide-react';
 import Link from 'next/link';
 
-import { env } from '@/env';
-import { cn } from '@/utils/cn';
+import SessionCounter from '@/ui/components/SessionCounter';
+import LanguageSwitcher from '@/ui/components/LanguageSwitcher';
+import Clock from '@/ui/components/Clock';
+import SearchBox from '@/ui/components/SearchBox';
 
-import Clock from '../components/Clock';
-import SessionCounter from '../components/SessionCounter';
-import { ShieldCheck } from 'lucide-react';
+import { env } from '@/env';
 
 export default function TopMenu() {
   return (
-    <header className={cn('shadow-sm h-100')}>
-      <div
-        className={cn('container d-flex gap-4 justify-content-between align-items-center h-100')}
+    <header className="d-flex align-items-center gap-4 h-100 px-5 bg-body shadow-sm">
+      <Link
+        href="/"
+        className="d-inline-flex align-items-center gap-3 fw-bold text-uppercase text-decoration-none fg-primary"
       >
-        <Link
-          href="/"
-          className={cn(
-            'd-inline-flex align-items-center gap-2 fs-4 text-decoration-none uppercase fg-primary'
-          )}
-        >
-          <ShieldCheck size={32} aria-hidden />
-          Inventory
-        </Link>
-
-        <input type="search" className={cn('form-control w-25 ml-auto')} placeholder="Search" />
-
-        <div className={cn('d-flex gap-4 align-items-end fs-sm')}>
-          <Clock />
-          <SessionCounter url={env.SOCKET_URL} />
-        </div>
+        <ShieldCheck size={28} aria-hidden />
+        <span>Inventory</span>
+      </Link>
+      <SearchBox />
+      <div className="d-flex align-items-center gap-4 ms-auto">
+        <LanguageSwitcher />
+        <Clock />
+        <SessionCounter url={env.SOCKET_URL} />
       </div>
     </header>
   );
