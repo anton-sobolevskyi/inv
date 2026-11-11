@@ -44,3 +44,5 @@ public/sw*
 public/swe-worker*
 
 server/node_modules
+
+!.env.example
