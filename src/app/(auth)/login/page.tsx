@@ -1,5 +1,4 @@
 import { getTranslations } from 'next-intl/server';
-
 import { ShieldCheck } from 'lucide-react';
 
 import LoginForm from '@/features/auth/LoginForm';

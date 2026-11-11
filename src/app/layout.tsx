@@ -7,6 +7,7 @@ import { SerwistProvider } from '@serwist/turbopack/react';
 import './globals.scss';
 
 import StoreProvider from '@/providers/StoreProvider';
+import { getSessionUser } from '@/utils/session';
 
 const geistSans = Geist({
   variable: '--font-geist-sans',
@@ -59,13 +60,14 @@ export const viewport: Viewport = {
 
 export default async function RootLayout({ children }: LayoutProps<'/'>) {
   const locale = await getLocale();
+  const user = await getSessionUser();
 
   return (
     <html lang={locale} className={`${geistSans.variable}`}>
       <body>
         <SerwistProvider swUrl="/serwist/sw.js">
           <NextIntlClientProvider>
-            <StoreProvider>{children}</StoreProvider>
+            <StoreProvider user={user}>{children}</StoreProvider>
           </NextIntlClientProvider>
         </SerwistProvider>
       </body>

@@ -29,7 +29,6 @@
     "submit": "Sign in",
     "submitting": "Signing in…",
     "invalidCredentials": "Wrong e-mail or password",
-    "tooManyAttempts": "Too many attempts. Try again in a minute.",
     "invalidInput": "Please check the entered data",
     "network": "Could not reach the server"
   }

@@ -1,6 +1,8 @@
 import { LINKS } from '@/lib/constants';
 import { cn } from '@/utils/cn';
+
 import NavLink from '../components/NavLink';
+import LogoutLink from '../components/LogoutLink';
 
 export default function Sidebar() {
   return (
@@ -14,6 +16,8 @@ export default function Sidebar() {
           ))}
         </ul>
       </nav>
+
+      <LogoutLink />
     </aside>
   );
 }

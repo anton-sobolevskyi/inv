@@ -1,14 +1,15 @@
-import { configureStore } from '@reduxjs/toolkit';
+import { combineReducers, configureStore } from '@reduxjs/toolkit';
 
-import { authSlice } from './slices';
+import { authSlice, AuthState } from './slices';
 
-export const reducer = {
+export const rootReducer = combineReducers({
   auth: authSlice.reducer,
-};
+});
 
-export const makeStore = () => {
+export const makeStore = (initialState: AuthState | undefined) => {
   return configureStore({
-    reducer,
+    reducer: rootReducer,
+    preloadedState: { auth: initialState },
   });
 };
 

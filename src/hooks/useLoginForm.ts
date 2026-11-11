@@ -1,15 +1,15 @@
-import { z } from 'zod';
 import { useForm } from 'react-hook-form';
 import { zodResolver } from '@hookform/resolvers/zod';
 import { useState } from 'react';
+import { useRouter } from 'next/navigation';
 
-export const loginSchema = z.object({
-  email: z.string().trim().min(1, 'required').pipe(z.email('invalidEmail')),
-  password: z.string().min(8, 'passwordMin'),
-});
-export type LoginInput = z.infer<typeof loginSchema>;
+import { LoginInput, loginSchema } from '@/lib/shemas';
+import { login } from '@/lib/api';
+import { loggedIn, useAppDispatch } from '@/lib/store';
 
 export function useLoginForm() {
+  const router = useRouter();
+  const dispatch = useAppDispatch();
   const [error, setError] = useState<string | null>(null);
 
   const {
@@ -22,7 +22,12 @@ export function useLoginForm() {
     setError(null);
 
     try {
-      // TODO: Implement login logic
+      const user = await login(values);
+
+      dispatch(loggedIn(user));
+
+      router.replace('/');
+      router.refresh();
     } catch (error) {
       setError(error as string);
     }
