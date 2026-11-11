@@ -1,34 +1,36 @@
 'use client';
 
-import { cn } from '@/utils/cn';
-import { getFormattedDate, getFormattedTime } from '@/utils/format';
 import { ClockIcon } from 'lucide-react';
-import { useTranslations } from 'next-intl';
+import { useLocale, useTranslations } from 'next-intl';
 import { useEffect, useState } from 'react';
 
+import { getFormattedDate, getFormattedTime } from '@/utils/format';
+import { Locale } from '@/types';
+
 export default function Clock() {
-  const [time, setTime] = useState<Date>(new Date());
+  const [now, setNow] = useState<Date | null>(null);
   const t = useTranslations('Clock');
+  const locale = useLocale() as Locale;
 
   useEffect(() => {
-    const interval = setInterval(() => setTime(new Date()), 1000);
+    const tick = () => setNow(new Date());
+    const first = setTimeout(tick, 0);
+    const interval = setInterval(tick, 1000);
+
     return () => {
+      clearTimeout(first);
       clearInterval(interval);
     };
   }, []);
 
   return (
-    <div className={cn('d-flex flex-column')}>
+    <div className="d-flex flex-column gap-1 lh-sm">
       <span>{t('today')}</span>
-      <span className={cn('d-inline-flex gap-4')}>
-        <time dateTime={time.toISOString()} className={cn('d-inline-flex')}>
-          {time && getFormattedDate(time)}
-        </time>
-        <span className={cn('d-inline-flex align-items-center gap-2')}>
-          <ClockIcon size={12} className={cn('fg-primary')} />
-          <time className={cn('fs-6')} dateTime={time.toISOString()}>
-            {time && getFormattedTime(time)}
-          </time>
+      <span className="d-inline-flex align-items-center gap-4">
+        <span>{now ? getFormattedDate(now, locale).toUpperCase() : '—'}</span>
+        <span className="d-inline-flex align-items-center gap-2">
+          <ClockIcon size={12} aria-hidden />
+          <time>{now ? getFormattedTime(now, locale) : '--:--'}</time>
         </span>
       </span>
     </div>
