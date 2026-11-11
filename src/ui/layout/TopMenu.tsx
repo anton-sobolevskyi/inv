@@ -9,7 +9,7 @@ import { ShieldCheck } from 'lucide-react';
 
 export default function TopMenu() {
   return (
-    <header className={cn('bg-white shadow-sm py-4')}>
+    <header className={cn('bg-white shadow-sm py-4 h-100')}>
       <div className={cn('container')}>
         <div className={cn('d-flex align-items-center justify-content-between')}>
           <Link

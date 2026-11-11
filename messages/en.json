@@ -11,5 +11,10 @@
   },
   "SocketCounter": {
     "title": "Active sessions"
+  },
+  "Nav": {
+    "dashboard": "Dashboard",
+    "orders": "Orders",
+    "products": "Products"
   }
 }

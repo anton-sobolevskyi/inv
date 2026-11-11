@@ -45,7 +45,7 @@ const nextConfig: NextConfig = {
   /* config options here */
   // cacheComponents: true,
   // partialPrefetching: true,
-  // reactCompiler: true,
+  reactCompiler: true,
   sassOptions: {
     implementation: 'sass-embedded',
   },
