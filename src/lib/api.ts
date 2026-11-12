@@ -24,6 +24,7 @@ import {
   ORDERS_QUERY,
   PRODUCTS_QUERY,
 } from './graphql/queries';
+import { redirect } from 'next/navigation';
 
 const TAGS = ['Orders', 'Order', 'Products', 'Dashboard'] as const;
 
@@ -64,7 +65,7 @@ function redirectIfUnauthenticated(error: GqlError) {
   if (error.code === 'UNAUTHENTICATED' || error.status === 401) {
     if (window.location.pathname !== '/login') {
       const next = encodeURIComponent(window.location.pathname + window.location.search);
-      window.location.assign(`/login?next=${next}`);
+      redirect(`/login?next=${next}`);
     }
   }
 }

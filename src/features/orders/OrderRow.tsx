@@ -1,6 +1,6 @@
 'use client';
 
-import { ChevronRight, Trash2 } from 'lucide-react';
+import { Trash2 } from 'lucide-react';
 import { useLocale, useTranslations } from 'next-intl';
 
 import './OrderRow.scss';

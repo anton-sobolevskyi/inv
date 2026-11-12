@@ -1,7 +1,7 @@
 'use client';
 
 import { useTranslations } from 'next-intl';
-import { useEffect, useState } from 'react';
+import { useEffect } from 'react';
 import { io } from 'socket.io-client';
 import { cn } from '@/utils/cn';
 import { setSessions, useAppSelector } from '@/lib/store';
@@ -17,7 +17,7 @@ export default function SessionCounter({ url }: { url: string }) {
     return () => {
       socket.disconnect();
     };
-  }, []);
+  }, [url]);
 
   return (
     <span className={cn('badge bg-primary')}>

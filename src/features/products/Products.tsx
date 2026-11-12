@@ -26,7 +26,7 @@ export default function Products({ initial }: { initial: ProductsPage | null }) 
     setPage(0);
   }
 
-  const { data, isError, isFetching, refetch } = useGetProductsQuery({
+  const { data, isError, refetch } = useGetProductsQuery({
     type,
     search,
     page,

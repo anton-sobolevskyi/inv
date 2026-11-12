@@ -1,5 +1,3 @@
-import { Settings } from 'lucide-react';
-
 import { LINKS } from '@/lib/constants';
 import { cn } from '@/utils/cn';
 

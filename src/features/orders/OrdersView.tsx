@@ -26,7 +26,7 @@ export default function OrdersView({ initial }: { initial: OrdersPage | null }) 
     setPage(0);
   }
 
-  const { data, isError, isFetching, refetch } = useGetOrdersQuery({
+  const { data, isError, refetch } = useGetOrdersQuery({
     search,
     page,
     pageSize: 10,

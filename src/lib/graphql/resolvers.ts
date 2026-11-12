@@ -13,7 +13,6 @@ const MAX_LIMIT = 200;
 const clampLimit = (limit: number | undefined) => Math.min(Math.max(limit ?? 50, 1), MAX_LIMIT);
 const clampOffset = (offset: number | undefined) => Math.max(offset ?? 0, 0);
 
-/** Every root field requires a valid JWT (cookie or `Authorization: Bearer`). */
 function authed<A, R>(fn: (args: A, ctx: AuthedContext) => Promise<R> | R) {
   return (_parent: unknown, args: A, ctx: GraphQLContext): Promise<R> | R => {
     if (!ctx.user) {
@@ -151,12 +150,7 @@ export const resolvers = {
   },
 
   Mutation: {
-    /**
-     * Deletes the order together with the products that belong *only* to this order
-     * (the confirmation dialog lists exactly those products). Products shared with another
-     * order are kept. DB foreign keys cascade to prices, guarantees and order_products.
-     */
-    deleteOrder: authed(async ({ id }: { id: string }, ctx) => {
+    deleteOrder: authed(async ({ id }: { id: string }) => {
       const orderId = Number(id);
       const deleted = await db.transaction(async (tx) => {
         const links = await tx
