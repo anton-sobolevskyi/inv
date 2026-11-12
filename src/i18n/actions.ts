@@ -1,14 +1,14 @@
 'use server';
 
-import { LOCALE_COOKIE, LOCALES } from '@/constants';
-import { Locale } from 'next-intl';
 import { cookies } from 'next/headers';
+
+import { LOCALE_COOKIE, LOCALES } from '@/constants';
+import type { Locale } from '@/types';
 
 const isLocale = (value: string | undefined | null): value is Locale =>
   !!value && (LOCALES as readonly string[]).includes(value);
 
 export async function setLocale(locale: string) {
-  console.log('setLocale', locale, isLocale(locale));
   if (!isLocale(locale)) return;
 
   (await cookies()).set(LOCALE_COOKIE, locale, {

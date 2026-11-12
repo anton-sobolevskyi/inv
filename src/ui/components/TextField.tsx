@@ -14,7 +14,7 @@ export function TextField({
   const id = useId();
   const tv = useTranslations('Validation');
   return (
-    <div className={cn('form-field mb-4', className)}>
+    <div className={cn('mb-4', className)}>
       <label className="form-label" htmlFor={id}>
         {label}
       </label>

@@ -16,7 +16,7 @@ import {
   SessionUser,
 } from '@/types';
 import { ordersVariables, productsVariables } from '@/utils/api';
-import { DELETE_ORDER, ORDER_DETAILS_QUERY, ORDERS_QUERY, PRODUCTS_QUERY } from './queries';
+import { DELETE_ORDER, ORDER_DETAILS_QUERY, ORDERS_QUERY, PRODUCTS_QUERY } from './graphql/queries';
 
 const TAGS = ['Orders', 'Order', 'Products'] as const;
 
@@ -57,8 +57,7 @@ function redirectIfUnauthenticated(error: GqlError) {
   if (error.code === 'UNAUTHENTICATED' || error.status === 401) {
     if (window.location.pathname !== '/login') {
       const next = encodeURIComponent(window.location.pathname + window.location.search);
-
-      window.location.assign(`/login`);
+      window.location.assign(`/login?next=${next}`);
     }
   }
 }

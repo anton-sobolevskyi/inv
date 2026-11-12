@@ -9,3 +9,5 @@ export const TOKEN_TTL_SECONDS = 60 * 60 * 8;
 export const SERVER_ERRORS: ServerError[] = ['invalidCredentials', 'invalidInput', 'network'];
 
 export const LOCALE_COOKIE = 'inv_locale';
+
+export const UI_STORAGE_KEY = 'inventory-ui';

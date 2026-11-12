@@ -13,7 +13,7 @@ export default function TopMenu() {
     <header className="d-flex align-items-center gap-4 h-100 px-5 bg-body shadow-sm">
       <Link
         href="/"
-        className="d-inline-flex align-items-center gap-3 fw-bold text-uppercase text-decoration-none fg-primary"
+        className="d-inline-flex align-items-center gap-3 fw-bold text-uppercase text-decoration-none text-primary"
       >
         <ShieldCheck size={28} aria-hidden />
         <span>Inventory</span>

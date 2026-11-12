@@ -1,7 +1,7 @@
 import { useForm } from 'react-hook-form';
 import { zodResolver } from '@hookform/resolvers/zod';
 import { useState } from 'react';
-import { useRouter } from 'next/navigation';
+import { useRouter, useSearchParams } from 'next/navigation';
 
 import { LoginInput, loginSchema } from '@/lib/shemas';
 import { login } from '@/lib/api';
@@ -9,6 +9,7 @@ import { loggedIn, useAppDispatch } from '@/lib/store';
 
 export function useLoginForm() {
   const router = useRouter();
+  const searchParams = useSearchParams();
   const dispatch = useAppDispatch();
   const [error, setError] = useState<string | null>(null);
 
@@ -26,7 +27,10 @@ export function useLoginForm() {
 
       dispatch(loggedIn(user));
 
-      router.replace('/');
+      const next = searchParams.get('next');
+      const target = next && next.startsWith('/') && !next.startsWith('//') ? next : '/';
+
+      router.replace(target);
       router.refresh();
     } catch (error) {
       setError(error as string);
