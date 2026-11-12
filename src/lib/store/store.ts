@@ -1,15 +1,19 @@
 import { combineReducers, configureStore } from '@reduxjs/toolkit';
 
-import { authSlice, AuthState } from './slices';
+import { authSlice, AuthState, realtimeSlice } from './slices';
+import { api } from '@/lib/api';
 
 export const rootReducer = combineReducers({
   auth: authSlice.reducer,
+  realtime: realtimeSlice.reducer,
+  [api.reducerPath]: api.reducer,
 });
 
 export const makeStore = (initialState: AuthState | undefined) => {
   return configureStore({
     reducer: rootReducer,
     preloadedState: { auth: initialState },
+    middleware: (getDefault) => getDefault().concat(api.middleware),
   });
 };
 
