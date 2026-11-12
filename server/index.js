@@ -6,14 +6,17 @@ const PORT = process.env.PORT || 3001;
 const CORS_ORIGIN = process.env.CORS_ORIGIN || '*';
 
 const app = express();
+app.disable('x-powered-by');
 app.get('/health', (_req, res) => res.json({ status: 'ok' }));
 
 const server = http.createServer(app);
 const io = new Server(server, { cors: { origin: CORS_ORIGIN } });
 
+const broadcastSessions = () => io.emit('sessions', io.sockets.sockets.size);
+
 io.on('connection', (socket) => {
-  io.emit('sessions', io.engine.clientsCount);
-  socket.on('disconnect', () => io.emit('sessions', io.engine.clientsCount));
+  broadcastSessions();
+  socket.on('disconnect', broadcastSessions);
 });
 
 server.listen(PORT, () => console.log(`Socket.io server: http://localhost:${PORT}`));

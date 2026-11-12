@@ -6,7 +6,7 @@ import { AUTH_COOKIE, TOKEN_TTL_SECONDS } from '@/constants';
 
 const encodeSecret = (secret: string) => new TextEncoder().encode(secret);
 
-async function verifyToken(
+export async function verifyToken(
   token: string | undefined | null,
   secret: string
 ): Promise<SessionUser | null> {

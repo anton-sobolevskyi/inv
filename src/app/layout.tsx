@@ -62,6 +62,8 @@ export default async function RootLayout({ children }: LayoutProps<'/'>) {
   const locale = await getLocale();
   const user = await getSessionUser();
 
+  console.log('locale', locale);
+
   return (
     <html lang={locale} className={`${geistSans.variable}`}>
       <body>
