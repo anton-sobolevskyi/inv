@@ -4,6 +4,7 @@ import { BaseQueryFn, createApi } from '@reduxjs/toolkit/query/react';
 import { http } from './http';
 import { SERVER_ERRORS } from '@/constants';
 import {
+  DashboardData,
   GqlError,
   GqlRequest,
   GqlResponse,
@@ -16,9 +17,15 @@ import {
   SessionUser,
 } from '@/types';
 import { ordersVariables, productsVariables } from '@/utils/api';
-import { DELETE_ORDER, ORDER_DETAILS_QUERY, ORDERS_QUERY, PRODUCTS_QUERY } from './graphql/queries';
+import {
+  DASHBOARD_QUERY,
+  DELETE_ORDER,
+  ORDER_DETAILS_QUERY,
+  ORDERS_QUERY,
+  PRODUCTS_QUERY,
+} from './graphql/queries';
 
-const TAGS = ['Orders', 'Order', 'Products'] as const;
+const TAGS = ['Orders', 'Order', 'Products', 'Dashboard'] as const;
 
 export async function login(data: { email: string; password: string }): Promise<SessionUser> {
   try {
@@ -111,6 +118,12 @@ export const api = createApi({
       query: (id) => ({ document: DELETE_ORDER, variables: { id } }),
       transformResponse: (data: { deleteOrder: boolean }) => data.deleteOrder,
       invalidatesTags: ['Orders', 'Order', 'Products'],
+    }),
+
+    getDashboard: build.query<DashboardData, void>({
+      query: () => ({ document: DASHBOARD_QUERY }),
+      transformResponse: (data: DashboardData) => data,
+      providesTags: ['Dashboard'],
     }),
   }),
 });

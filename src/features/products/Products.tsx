@@ -8,6 +8,7 @@ import { setProductType, useAppDispatch, useAppSelector } from '@/lib/store';
 import { useDebouncedValue } from '@/hooks/useDebouncedValue';
 import { useGetProductsQuery } from '@/hooks/useProducts';
 import ProductRow from './ProductRow';
+import './ProductRow.scss';
 import Pagination from '@/ui/components/Pagination';
 
 export default function Products({ initial }: { initial: ProductsPage | null }) {

@@ -60,7 +60,7 @@ export default function OrdersView({ initial }: { initial: OrdersPage | null }) 
             <div className="py-5 px-4 text-center text-body-secondary">{t('noOrders')}</div>
           )}
           {view && view.orders.length > 0 && (
-            <table className="g-grid gap-2 gap-3 m-0 p-0 w-100">
+            <table className="w-100 m-0">
               <tbody>
                 {view.orders.map((order) => (
                   <OrderRow key={order.id} order={order} selected={order.id === selectedId} />

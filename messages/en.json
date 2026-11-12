@@ -90,5 +90,18 @@
     "deleteProductTitle": "Are you sure you want to delete this product?",
     "deleting": "Deleting…",
     "deleteFailed": "Could not delete. Please try again."
+  },
+  "Dashboard": {
+    "title": "Dashboard",
+    "orders": "Orders",
+    "products": "Products",
+    "valueUsd": "Total value, USD",
+    "valueUah": "Total value, UAH",
+    "monthly": "Orders value by month (USD)",
+    "map": "Orders on the map",
+    "loadingChart": "Loading chart…",
+    "loadingMap": "Loading map…",
+    "noData": "No data to show",
+    "computing": "Calculating in a background worker…"
   }
 }

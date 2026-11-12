@@ -1,7 +1,11 @@
-export default function ContentPage() {
-  return (
-    <div>
-      <h1>Content</h1>
-    </div>
-  );
+import { getTranslations } from 'next-intl/server';
+
+import DashboardView from '@/features/dashboard/DashboardView';
+
+export async function generateMetadata() {
+  return { title: (await getTranslations('Dashboard'))('title') };
+}
+
+export default function DashboardRoute() {
+  return <DashboardView />;
 }

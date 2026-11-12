@@ -90,3 +90,20 @@ export interface ProductsPage {
   productsCount: number;
   productTypes: string[];
 }
+
+export interface DashboardOrder {
+  id: string;
+  title: string;
+  date: string;
+  address: string | null;
+  latitude: number | null;
+  longitude: number | null;
+  productsCount: number;
+  totals: Money[];
+  products: { id: string; title: string; type: string }[];
+}
+
+export interface DashboardData {
+  orders: DashboardOrder[];
+  productsCount: number;
+}
