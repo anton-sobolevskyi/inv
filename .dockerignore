@@ -1,0 +1,11 @@
+node_modules
+.next
+.git
+.idea
+.husky
+coverage
+.env
+.env.*
+!.env.example
+server/node_modules
+*.log

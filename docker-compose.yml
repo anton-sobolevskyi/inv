@@ -1,0 +1,95 @@
+name: inv-prod
+
+x-web-build: &web-build
+  context: .
+  args:
+    NEXT_PUBLIC_API_URL: ${NEXT_PUBLIC_API_URL:-http://localhost:3000}
+    SOCKET_URL: ${SOCKET_URL:-http://localhost:3001}
+
+x-db-env: &db-env
+  DATABASE_HOST: mysql
+  DATABASE_PORT: 3306
+  MYSQL_DATABASE: ${MYSQL_DATABASE:-inventory}
+  MYSQL_USER: ${MYSQL_USER:-inventory}
+  MYSQL_PASSWORD: ${MYSQL_PASSWORD:-dev}
+
+services:
+  mysql:
+    image: mysql:8.4
+    restart: unless-stopped
+    environment:
+      MYSQL_ROOT_PASSWORD: ${MYSQL_ROOT_PASSWORD:-dev}
+      MYSQL_DATABASE: ${MYSQL_DATABASE:-inventory}
+      MYSQL_USER: ${MYSQL_USER:-inventory}
+      MYSQL_PASSWORD: ${MYSQL_PASSWORD:-dev}
+    volumes:
+      - mysql_prod_data:/var/lib/mysql
+    healthcheck:
+      test: ['CMD-SHELL', 'mysqladmin ping -h 127.0.0.1 -u root -p"$$MYSQL_ROOT_PASSWORD" --silent']
+      interval: 5s
+      timeout: 5s
+      retries: 12
+      start_period: 30s
+
+  socket:
+    build: ./server
+    restart: unless-stopped
+    ports:
+      - '3001:3001'
+    environment:
+      PORT: 3001
+      CORS_ORIGIN: ${CORS_ORIGIN:-http://localhost:3000}
+    healthcheck:
+      test: ['CMD', 'wget', '-qO-', 'http://localhost:3001/health']
+      interval: 15s
+      timeout: 3s
+      retries: 3
+
+  migrate:
+    build: *web-build
+    image: inv-web:prod
+    command: ['pnpm', 'db:migrate']
+    restart: 'no'
+    environment:
+      <<: *db-env
+    depends_on:
+      mysql:
+        condition: service_healthy
+
+  web:
+    build: *web-build
+    image: inv-web:prod
+    restart: unless-stopped
+    ports:
+      - '3000:3000'
+    environment:
+      <<: *db-env
+      NODE_ENV: production
+      SOCKET_URL: ${SOCKET_URL:-http://localhost:3001}
+      JWT_SECRET: ${JWT_SECRET:?Set JWT_SECRET in .env}
+    depends_on:
+      mysql:
+        condition: service_healthy
+      migrate:
+        condition: service_completed_successfully
+      socket:
+        condition: service_started
+
+  seed:
+    build: *web-build
+    image: inv-web:prod
+    profiles: ['seed']
+    command: ['pnpm', 'db:seed']
+    restart: 'no'
+    environment:
+      <<: *db-env
+      SEED_ADMIN_EMAIL: ${SEED_ADMIN_EMAIL:-admin@inventory.local}
+      SEED_ADMIN_PASSWORD: ${SEED_ADMIN_PASSWORD:-admin12345}
+    depends_on:
+      mysql:
+        condition: service_healthy
+      migrate:
+        condition: service_completed_successfully
+
+volumes:
+  mysql_prod_data:
