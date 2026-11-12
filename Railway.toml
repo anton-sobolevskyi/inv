@@ -1,0 +1,10 @@
+# Web service (Next.js) - repo root
+[build]
+builder = "RAILPACK"
+ 
+[deploy]
+# Runs before each release, applies Drizzle migrations
+preDeployCommand = ["pnpm db:migrate"]
+startCommand = "pnpm start"
+restartPolicyType = "ON_FAILURE"
+restartPolicyMaxRetries = 10
