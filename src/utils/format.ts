@@ -15,28 +15,44 @@ export const getFormattedDate = (date: Date, locale: Locale = 'en') =>
     year: 'numeric',
   }).format(date);
 
-const pad = (n: number) => String(n).padStart(2, '0');
-
 const toDate = (value: string | Date) => (value instanceof Date ? value : new Date(value));
 
+const joinParts = (parts: Intl.DateTimeFormatPart[], sep = '/') =>
+  parts
+    .filter((p) => p.type !== 'literal')
+    .map((p) => p.value.replace(/\.$/, ''))
+    .join(sep);
+
 export function formatDateShort(value: string | Date): string {
-  const d = toDate(value);
-  return `${pad(d.getUTCDate())} / ${pad(d.getUTCMonth() + 1)}`;
+  return joinParts(
+    new Intl.DateTimeFormat('en-GB', {
+      day: '2-digit',
+      month: '2-digit',
+      timeZone: 'UTC',
+    }).formatToParts(toDate(value))
+  );
 }
 
-/** Long form: "06 / Apr / 2026" (month name follows the locale). */
 export function formatDateLong(value: string | Date, locale: string): string {
-  const d = toDate(value);
-  const month = new Intl.DateTimeFormat(locale, { month: 'short', timeZone: 'UTC' })
-    .format(d)
-    .replace(/\.$/, '');
-  return `${pad(d.getUTCDate())} / ${month} / ${d.getUTCFullYear()}`;
+  return joinParts(
+    new Intl.DateTimeFormat(locale, {
+      day: '2-digit',
+      month: 'short',
+      year: 'numeric',
+      timeZone: 'UTC',
+    }).formatToParts(toDate(value))
+  );
 }
 
-/** Numeric form: "06 / 04 / 2026". */
 export function formatDateNumeric(value: string | Date): string {
-  const d = toDate(value);
-  return `${pad(d.getUTCDate())} / ${pad(d.getUTCMonth() + 1)} / ${d.getUTCFullYear()}`;
+  return joinParts(
+    new Intl.DateTimeFormat('en-GB', {
+      day: '2-digit',
+      month: '2-digit',
+      year: 'numeric',
+      timeZone: 'UTC',
+    }).formatToParts(toDate(value))
+  );
 }
 
 export function formatAmount(value: number, locale: string): string {

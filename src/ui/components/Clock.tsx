@@ -29,7 +29,7 @@ export default function Clock() {
       <span className="d-inline-flex align-items-center gap-4">
         <span>{now ? getFormattedDate(now, locale).toUpperCase() : '—'}</span>
         <span className="d-inline-flex align-items-center gap-2">
-          <ClockIcon size={12} aria-hidden />
+          <ClockIcon size={12} />
           <time>{now ? getFormattedTime(now, locale) : '--:--'}</time>
         </span>
       </span>

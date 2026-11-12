@@ -16,9 +16,11 @@
 
 .sidebar {
   grid-area: sidebar;
+  background: #fff;
 }
 
 .main {
   grid-area: main;
   overflow-y: auto;
+  background: #eff2f5;
 }

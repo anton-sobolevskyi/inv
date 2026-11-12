@@ -71,5 +71,24 @@
     "yes": "Так",
     "no": "Ні",
     "signedOut": "Ви вийшли"
+  },
+  "Orders": {
+    "title": "Замовлення",
+    "products": "{count, plural, one {Product} other {Products}}",
+    "productsLabel": "{count} {count, plural, one {product} other {products}}",
+    "open": "Відкрити замовлення",
+    "closePanel": "Закрити деталі замовлення",
+    "noProducts": "Це замовлення не має продуктів",
+    "noOrders": "Замовлення не знайдені",
+    "delete": "Видалити замовлення",
+    "total": "Загальна сума замовлення"
+  },
+  "Modals": {
+    "deleteOrderTitle": "Ви впевнені, що хочете видалити це замовлення?",
+    "deleteOrderHint": "Ці продукти будуть видалені разом з замовленням:",
+    "deleteOrderNoProducts": "Замовлення не має продуктів.",
+    "deleteProductTitle": "Ви впевнені, що хочете видалити цей продукт?",
+    "deleting": "Видалення…",
+    "deleteFailed": "Не вдалося видалити. Будь ласка, спробуйте знову."
   }
 }

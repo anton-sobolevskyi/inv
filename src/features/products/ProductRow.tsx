@@ -4,10 +4,10 @@ import { useLocale, useTranslations } from 'next-intl';
 
 import './ProductRow.scss';
 import { ProductItem } from '@/types';
-import ProductThumb from './ProductThumb';
 import { formatDateLong, formatDateNumeric } from '@/utils/format';
-import PriceStack from './PriceStack';
-import DateStack from './DateStack';
+import ProductThumb from '@/ui/components/ProductThumb';
+import PriceStack from '@/ui/components/PriceStack';
+import DateStack from '@/ui/components/DateStack';
 
 export default function ProductRow({ product, index }: { product: ProductItem; index: number }) {
   const t = useTranslations('Products');
@@ -21,7 +21,6 @@ export default function ProductRow({ product, index }: { product: ProductItem; i
     >
       <td
         className={`dot d-inline-block rounded-circle flex-shrink-0 ${product.isNew ? 'bg-success' : 'bg-secondary'}`}
-        aria-hidden
       />
       <td>
         <ProductThumb src={product.photo ?? null} alt={product.title} />

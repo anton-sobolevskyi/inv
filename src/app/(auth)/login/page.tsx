@@ -15,7 +15,7 @@ export default async function LoginPage() {
     <main className="d-flex justify-content-center align-items-center min-vh-100 p-5">
       <div className="card border-0 shadow-lg p-4" style={{ width: '400px' }}>
         <div className="d-flex align-items-center gap-2 mb-3 fw-bold text-uppercase text-primary">
-          <ShieldCheck size={28} aria-hidden /> Inventory
+          <ShieldCheck size={28} /> Inventory
         </div>
 
         <h1 className="fs-4 mb-1">{t('title')}</h1>

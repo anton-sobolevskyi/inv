@@ -18,15 +18,9 @@ export function TextField({
       <label className="form-label" htmlFor={id}>
         {label}
       </label>
-      <input
-        id={id}
-        className={cn('form-control', error && 'is-invalid')}
-        aria-invalid={!!error}
-        aria-describedby={error ? `${id}-error` : undefined}
-        {...input}
-      />
+      <input id={id} className={cn('form-control', error && 'is-invalid')} {...input} />
       {error && (
-        <span id={`${id}-error`} className="invalid-feedback" role="alert">
+        <span id={`${id}-error`} className="invalid-feedback">
           {tv(error as never)}
         </span>
       )}

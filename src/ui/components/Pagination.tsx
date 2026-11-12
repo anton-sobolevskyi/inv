@@ -19,26 +19,23 @@ export default function Pagination({
   if (pages <= 1) return null;
 
   return (
-    <nav
-      className="d-flex align-items-center justify-content-center gap-4 mt-5 text-body-secondary small"
-      aria-label={t('page', { page: page + 1, pages })}
-    >
+    <nav className="d-flex align-items-center justify-content-center gap-4 mt-5 text-body-secondary small">
       <button
         type="button"
         className="btn btn-outline-secondary btn-sm"
         disabled={page === 0}
         onClick={() => onChange(page - 1)}
       >
-        <ChevronLeft size={16} aria-hidden /> {t('prev')}
+        <ChevronLeft size={16} /> {t('prev')}
       </button>
-      <span aria-live="polite">{t('page', { page: page + 1, pages })}</span>
+      <span>{t('page', { page: page + 1, pages })}</span>
       <button
         type="button"
         className="btn btn-outline-secondary btn-sm"
         disabled={page >= pages - 1}
         onClick={() => onChange(page + 1)}
       >
-        {t('next')} <ChevronRight size={16} aria-hidden />
+        {t('next')} <ChevronRight size={16} />
       </button>
     </nav>
   );

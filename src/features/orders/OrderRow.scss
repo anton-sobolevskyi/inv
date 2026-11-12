@@ -1,0 +1,8 @@
+.order-row {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) 1fr 1fr 1fr min-content;
+
+  &:hover {
+    box-shadow: var(--bs-box-shadow);
+  }
+}

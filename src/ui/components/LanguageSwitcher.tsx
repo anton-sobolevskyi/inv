@@ -2,13 +2,12 @@
 
 import { LOCALES } from '@/constants';
 import { setLocale } from '@/i18n/actions';
-import { useLocale, useTranslations } from 'next-intl';
+import { useLocale } from 'next-intl';
 import { useRouter } from 'next/navigation';
 import { useTransition } from 'react';
 
 export default function LanguageSwitcher() {
   const currentLocale = useLocale();
-  const t = useTranslations('TopMenu');
   const router = useRouter();
   const [pending, startTransition] = useTransition();
 
@@ -21,18 +20,13 @@ export default function LanguageSwitcher() {
   };
 
   return (
-    <div
-      className="btn-group btn-group-sm"
-      role="group"
-      aria-label={t('language')}
-      aria-busy={pending}
-    >
+    <div className="btn-group btn-group-sm" role="group">
       {LOCALES.map((locale) => (
         <button
           key={locale}
           type="button"
           className={`btn text-uppercase ${locale === currentLocale ? 'btn-primary' : 'btn-outline-primary'}`}
-          aria-pressed={locale === currentLocale}
+          disabled={pending}
           onClick={() => change(locale)}
         >
           {locale}

@@ -1,6 +1,23 @@
-@use 'bootstrap/scss/bootstrap';
+@import 'bootstrap/scss/functions';
+
+$green: #84bb45;
+$primary: $green;
+$success: $green;
+$secondary: #90a4ae;
+$body-color: #37474f;
+$body-secondary-color: #78909c;
+$link-color: $green;
+$border-color: #dfe5e9;
+$border-radius: 0.25rem;
+$border-radius-lg: 0.25rem;
+
+@import 'bootstrap/scss/bootstrap';
 
 :root {
   --body-font-family: var(--font-geist-sans);
   color-scheme: light;
+}
+
+body {
+  letter-spacing: 0.01em;
 }

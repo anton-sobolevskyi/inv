@@ -15,7 +15,7 @@ export default function TopMenu() {
         href="/"
         className="d-inline-flex align-items-center gap-3 fw-bold text-uppercase text-decoration-none text-primary"
       >
-        <ShieldCheck size={28} aria-hidden />
+        <ShieldCheck size={28} />
         <span>Inventory</span>
       </Link>
       <SearchBox />

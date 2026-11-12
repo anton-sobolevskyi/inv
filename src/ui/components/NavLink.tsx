@@ -15,7 +15,11 @@ export default function NavLink({ href, text }: { href: string; text: string }) 
   return (
     <Link
       href={href}
-      className={cn('text-body', isActive(href) ? 'border-bottom border-2 border-primary' : '')}
+      className={cn(
+        'text-body text-decoration-none text-uppercase fw-semibold small',
+        isActive(href) ? 'border-bottom border-2 border-primary' : ''
+      )}
+      style={{ letterSpacing: '0.08em' }}
     >
       <span className={cn('d-inline-block text-center py-2')}>{t(text)}</span>
     </Link>

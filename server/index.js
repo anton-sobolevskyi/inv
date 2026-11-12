@@ -12,7 +12,7 @@ app.get('/health', (_req, res) => res.json({ status: 'ok' }));
 const server = http.createServer(app);
 const io = new Server(server, { cors: { origin: CORS_ORIGIN } });
 
-const broadcastSessions = () => io.emit('sessions', io.sockets.sockets.size);
+const broadcastSessions = () => io.emit('sessions', io.sockets.listenerCount);
 
 io.on('connection', (socket) => {
   broadcastSessions();

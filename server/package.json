@@ -16,5 +16,8 @@
       "version": "12.18.0",
       "onFail": "download"
     }
+  },
+  "devDependencies": {
+    "@types/socket.io": "^3.0.2"
   }
 }

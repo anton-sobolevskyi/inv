@@ -9,19 +9,13 @@ const PRODUCT_ICONS: Record<string, LucideIcon> = {
   '/products/mice.svg': Mouse,
 };
 
-export default function ProductThumb({ src, alt }: { src: string | null; alt: string }) {
+export default function ProductThumb({ src }: { src: string | null; alt?: string }) {
   const Icon = src ? PRODUCT_ICONS[src] : null;
-
   if (!Icon) return null;
 
   return (
-    <span
-      className="thumb d-flex align-items-center justify-content-center rounded-1 bg-body-secondary text-body"
-      role={alt ? 'img' : undefined}
-      aria-label={alt || undefined}
-      aria-hidden={alt ? undefined : true}
-    >
-      <Icon size={26} strokeWidth={1.75} aria-hidden />
+    <span className="thumb d-flex align-items-center justify-content-center rounded-1 bg-body-secondary text-body">
+      <Icon size={26} strokeWidth={1.75} />
     </span>
   );
 }

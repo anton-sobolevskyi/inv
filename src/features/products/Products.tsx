@@ -3,13 +3,12 @@
 import { useTranslations } from 'next-intl';
 import { useId, useState } from 'react';
 
-import './Products.scss';
 import { ProductsPage } from '@/types';
 import { setProductType, useAppDispatch, useAppSelector } from '@/lib/store';
 import { useDebouncedValue } from '@/hooks/useDebouncedValue';
 import { useGetProductsQuery } from '@/hooks/useProducts';
 import ProductRow from './ProductRow';
-import Pagination from './Pagination';
+import Pagination from '@/ui/components/Pagination';
 
 export default function Products({ initial }: { initial: ProductsPage | null }) {
   const t = useTranslations('Products');
@@ -76,27 +75,28 @@ export default function Products({ initial }: { initial: ProductsPage | null }) 
       )}
 
       {view && view.products.length > 0 && (
-        <div
-          className="overflow-x-auto p-4"
-          style={{ marginInline: '-1rem' }}
-          aria-busy={isFetching}
-        >
-          <table className="products-table" role="table" aria-label={t('title')}>
-            <tr className="product-row product-row--head d-grid align-items-center gap-5 mb-3 px-4 py-0 border-0 bg-transparent text-body-secondary fw-bold text-uppercase small">
-              <th />
-              <th />
-              <th>{t('colTitle')}</th>
-              <th>{t('colType')}</th>
-              <th>{t('colGuarantee')}</th>
-              <th>{t('colCondition')}</th>
-              <th>{t('colPrice')}</th>
-              <th>{t('colOrder')}</th>
-              <th>{t('colSpec')}</th>
-              <th>{t('colDate')}</th>
-            </tr>
-            {view.products.map((product, i) => (
-              <ProductRow key={product.id} product={product} index={i} />
-            ))}
+        <div className="overflow-x-auto p-4" style={{ marginInline: '-1rem' }}>
+          <table className="products-table">
+            <thead>
+              <tr className="product-row product-row--head d-grid align-items-center gap-5 mb-3 px-4 py-0 border-0 bg-transparent text-body-secondary fw-bold text-uppercase small">
+                <th />
+                <th />
+                <th>{t('colTitle')}</th>
+                <th>{t('colType')}</th>
+                <th>{t('colGuarantee')}</th>
+                <th>{t('colCondition')}</th>
+                <th>{t('colPrice')}</th>
+                <th>{t('colOrder')}</th>
+                <th>{t('colSpec')}</th>
+                <th>{t('colDate')}</th>
+              </tr>
+            </thead>
+
+            <tbody>
+              {view.products.map((product, i) => (
+                <ProductRow key={product.id} product={product} index={i} />
+              ))}
+            </tbody>
           </table>
         </div>
       )}

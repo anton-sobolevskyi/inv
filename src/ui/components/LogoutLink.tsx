@@ -16,7 +16,12 @@ export default function LogoutLink() {
 
   return (
     <div className={cn('text-center')}>
-      <button className={cn('btn btn-secondary')} onClick={() => handleLogout()}>
+      <button
+        className={cn(
+          'btn btn-link btn-sm text-body-secondary text-uppercase text-decoration-none'
+        )}
+        onClick={() => handleLogout()}
+      >
         Logout
       </button>
     </div>

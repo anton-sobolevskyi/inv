@@ -1,20 +1,23 @@
 'use client';
 
-import { Search } from 'lucide-react';
 import { useTranslations } from 'next-intl';
+
+import { setSearch, useAppDispatch, useAppSelector } from '@/lib/store';
 
 export default function SearchBox() {
   const t = useTranslations('TopMenu');
+  const dispatch = useAppDispatch();
+  const value = useAppSelector((s) => s.ui.search);
 
   return (
-    <>
-      <span className="visually-hidden">{t('search')}</span>
-      <label className="input-group w-25">
-        <span className="input-group-text">
-          <Search size={16} aria-hidden />
-        </span>
-        <input className="form-control" type="search" placeholder={t('search')} />
-      </label>
-    </>
+    <label className="w-25">
+      <input
+        className="form-control border-0 bg-body-secondary fw-semibold"
+        type="search"
+        placeholder={t('search')}
+        value={value}
+        onChange={(e) => dispatch(setSearch(e.target.value))}
+      />
+    </label>
   );
 }

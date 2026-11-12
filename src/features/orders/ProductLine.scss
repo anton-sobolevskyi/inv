@@ -1,0 +1,13 @@
+.product-line {
+  display: grid;
+  grid-template-columns: 0.875rem 4rem minmax(0, 1fr) auto;
+
+  &:hover {
+    background: var(--bs-secondary-bg);
+  }
+}
+
+.dot {
+  width: 0.625rem;
+  height: 0.625rem;
+}
